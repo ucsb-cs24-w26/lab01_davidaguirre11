@@ -10,19 +10,35 @@ using std::cout;
 // copy constructor
 IntList::IntList(const IntList& source) {
     //IMPLEMENT THIS
-    
+    head = nullptr;
+    if(source.head==nullptr)
+    {
+        return; //exits the constructor early
+    }
+    head = new Node; //creates a new node
+    head->info = source.head->info; 
+    head->next = nullptr;
 
+    Node* current = head;
+    Node* sourceCurrent = source.head->next;
+    while(sourceCurrent!=nullptr)
+    {
+        current->next = new Node; //creates a new node
+        current = current->next; //moves current pointer 
+        current->info = sourceCurrent->info; //access info of current pointer, to equal info of sourceCurrent pointer
+        current->next = nullptr; //next pointer to be a nullptr
+
+        sourceCurrent = sourceCurrent->next; //move sourceCurrent pointer
+    }
 }
 
 // destructor deletes all nodes
 IntList::~IntList() {
-    current = head;
-
-    while(current != nullptr)
+    while(head!=nullptr)
     {
-        current = current->next;
-        delete head;
-        head = current;
+        Node* temp = head;
+        head = head->next;
+        delete temp;
     }
 }
 
